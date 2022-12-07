@@ -1,12 +1,13 @@
 const library = document.querySelector('.library');
+
 const newBookBtn = document.querySelector('.new-book-btn');
+
 const submitFormBtn = document.querySelector('.submit-btn');
 
 const inputForm = document.querySelector('.input-form');
 inputForm.addEventListener("submit", submitForm);
 
 const formContainer = document.getElementById('form-container');
-closeTheForm();
 
 let myLibrary = [];
 
