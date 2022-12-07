@@ -5,11 +5,12 @@ const inputForm = document.querySelector('.input-form')
 
 let myLibrary = [];
 
-function Book(author, title, pages, read) {
+function Book(author, title, pages, read, isOnDisplay = false) {
     this.author = author;
     this.title = title;
     this.pages = pages;
     this.read = read;
+    this.isOnDisplay = isOnDisplay;
 }
 
 function addBookToLibrary(e) {
@@ -22,10 +23,13 @@ function addBookToLibrary(e) {
 
 function displayBooks() {
     myLibrary.forEach((book) => {
-        const card = document.createElement('div');
-        card.classList.add('card');
-        card.textContent = `${book.title} by ${book.author}, ${book.pages} pages. ${book.read ? 'Read' : 'Unread'}.`;
-        library.appendChild(card);
+        if (!book.isOnDisplay) {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.textContent = `${book.title} by ${book.author}, ${book.pages} pages. ${book.read ? 'Read' : 'Unread'}.`;
+            library.appendChild(card);
+            book.isOnDisplay = true;
+        }
     })
 }
 
@@ -33,6 +37,7 @@ displayBooks();
 
 function closeTheForm() {
     document.getElementById("input-popup").style.display = "none";
+    inputForm.reset();
 }
 
 function openTheForm() {
