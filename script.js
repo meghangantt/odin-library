@@ -1,7 +1,12 @@
 const library = document.querySelector('.library');
 const newBookBtn = document.querySelector('.new-book-btn');
 const submitFormBtn = document.querySelector('.submit-btn');
-const inputForm = document.querySelector('.input-form')
+
+const inputForm = document.querySelector('.input-form');
+inputForm.addEventListener("submit", submitForm);
+
+const formContainer = document.getElementById('form-container');
+closeTheForm();
 
 let myLibrary = [];
 
@@ -13,11 +18,9 @@ function Book(author, title, pages, read, isOnDisplay = false) {
     this.isOnDisplay = isOnDisplay;
 }
 
-function addBookToLibrary(e) {
-    e.preventDefault();
+function addBookToLibrary() {
     const newBook = new Book(document.getElementById("author").value, document.getElementById("title").value, document.getElementById("pages").value, document.getElementById("read").value);
     myLibrary.push(newBook);
-    closeTheForm();
     displayBooks();
 }
 
@@ -33,17 +36,17 @@ function displayBooks() {
     })
 }
 
-displayBooks();
-
-function closeTheForm() {
-    document.getElementById("input-popup").style.display = "none";
+function submitForm(e) {
+    e.preventDefault();
+    closeTheForm();
+    addBookToLibrary();
     inputForm.reset();
 }
 
-function openTheForm() {
-    document.getElementById("input-popup").style.display = "block";
+function closeTheForm() {
+    formContainer.style.display = "none";
 }
 
-inputForm.addEventListener("submit", addBookToLibrary);
-
-closeTheForm();
+function openTheForm() {
+    formContainer.style.display = "flex";
+}
