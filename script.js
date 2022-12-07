@@ -1,11 +1,9 @@
-const testBook1 = new Book('Author1', 'Book1', '41', true);
-const testBook2 = new Book('Author2', 'Book2', '60', false);
 const library = document.querySelector('.library');
 const newBookBtn = document.querySelector('.new-book-btn');
 const submitFormBtn = document.querySelector('.submit-btn');
 const inputForm = document.querySelector('.input-form')
 
-let myLibrary = [testBook1, testBook2];
+let myLibrary = [];
 
 function Book(author, title, pages, read) {
     this.author = author;
@@ -19,6 +17,7 @@ function addBookToLibrary(e) {
     const newBook = new Book(document.getElementById("author").value, document.getElementById("title").value, document.getElementById("pages").value, document.getElementById("read").value);
     myLibrary.push(newBook);
     closeTheForm();
+    displayBooks();
 }
 
 function displayBooks() {
