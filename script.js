@@ -16,11 +16,7 @@ function Book(author, title, pages, read) {
 
 function addBookToLibrary(e) {
     e.preventDefault();
-    let author = document.getElementById("author").value;
-    let title = document.getElementById("title").value;
-    let pages = document.getElementById("pages").value;
-    let read = document.getElementById("read").value;
-    const newBook = new Book(author, title, pages, read);
+    const newBook = new Book(document.getElementById("author").value, document.getElementById("title").value, document.getElementById("pages").value, document.getElementById("read").value);
     myLibrary.push(newBook);
     closeTheForm();
 }
