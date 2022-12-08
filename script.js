@@ -1,4 +1,4 @@
-const library = document.querySelector('.library');
+const libraryDisplay = document.querySelector('.library');
 
 const newBookBtn = document.querySelector('.new-book-btn');
 
@@ -35,9 +35,10 @@ function removeBookFromLibrary() {
     for (let i = 0; i < myLibrary.length; i++) {
         if (`${i}` in deleteBtn.parentElement.classList) {
             myLibrary.splice(i, 1);
+            libraryDisplay.removeChild(deleteBtn.parentElement);
         }
     }
-    displayBooks();
+    
 }
 
 function displayBooks() {
@@ -48,7 +49,7 @@ function displayBooks() {
             card.classList.add(`${myLibrary.indexOf(book)}`);
             card.textContent = `${book.title} by ${book.author}, ${book.pages} pages. ${book.read ? 'Read' : 'Unread'}.`;
             card.appendChild(deleteBtn);
-            library.appendChild(card);
+            libraryDisplay.appendChild(card);
             book.isOnDisplay = true;
         }
     })
