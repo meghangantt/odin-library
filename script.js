@@ -4,11 +4,6 @@ const newBookBtn = document.querySelector('.new-book-btn');
 
 const submitFormBtn = document.querySelector('.submit-btn');
 
-const deleteBtn = document.createElement('button');
-    deleteBtn.classList.add('deleteBtn');
-    deleteBtn.textContent = 'Remove from Library';
-    deleteBtn.addEventListener('click', removeBookFromLibrary);
-
 const inputForm = document.querySelector('.input-form');
     inputForm.addEventListener('submit', submitForm);
 
@@ -31,15 +26,6 @@ function addBookToLibrary() {
     displayBooks();
 }
 
-function removeBookFromLibrary() {
-    for (let i = 0; i < myLibrary.length; i++) {
-        if (`${i}` in deleteBtn.parentElement.classList) {
-            myLibrary.splice(i, 1);
-            libraryDisplay.removeChild(deleteBtn.parentElement);
-        }
-    }
-    
-}
 
 function displayBooks() {
     myLibrary.forEach((book) => {
@@ -48,9 +34,25 @@ function displayBooks() {
             card.classList.add('card');
             card.classList.add(`${myLibrary.indexOf(book)}`);
             card.textContent = `${book.title} by ${book.author}, ${book.pages} pages. ${book.read ? 'Read' : 'Unread'}.`;
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.classList.add('deleteBtn');
+            deleteBtn.textContent = 'Remove from Library';
+            deleteBtn.addEventListener('click', removeBookFromLibrary);
+
             card.appendChild(deleteBtn);
             libraryDisplay.appendChild(card);
             book.isOnDisplay = true;
+            
+            function removeBookFromLibrary() {
+                for (let i = 0; i < myLibrary.length; i++) {
+                    if (`${i}` in deleteBtn.parentElement.classList) {
+                        myLibrary.splice(i, 1);
+                        libraryDisplay.removeChild(deleteBtn.parentElement);
+                    }
+                }
+                
+            }
         }
     })
 }
