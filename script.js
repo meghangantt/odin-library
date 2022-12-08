@@ -4,8 +4,13 @@ const newBookBtn = document.querySelector('.new-book-btn');
 
 const submitFormBtn = document.querySelector('.submit-btn');
 
+const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('deleteBtn');
+    deleteBtn.textContent = 'Remove from Library';
+    deleteBtn.addEventListener('click', deleteBook);
+
 const inputForm = document.querySelector('.input-form');
-inputForm.addEventListener("submit", submitForm);
+    inputForm.addEventListener('submit', submitForm);
 
 const formContainer = document.getElementById('form-container');
 
@@ -32,6 +37,7 @@ function displayBooks() {
             const card = document.createElement('div');
             card.classList.add('card');
             card.textContent = `${book.title} by ${book.author}, ${book.pages} pages. ${book.read ? 'Read' : 'Unread'}.`;
+            card.appendChild(deleteBtn);
             library.appendChild(card);
             book.isOnDisplay = true;
         }
