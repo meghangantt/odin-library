@@ -40,6 +40,7 @@ function NewCard(book) {
     card.classList.add('card');
     card.textContent = `${book.title} by ${book.author}, ${book.pages} pages. ${book.read ? 'Read' : 'Unread'}.`;
     card.appendChild(NewDeleteBtn(book));
+    card.appendChild(NewReadToggle(book));
     return card;
 }
 
@@ -48,10 +49,23 @@ function NewDeleteBtn(book) {
     deleteBtn.classList.add('deleteBtn');
     deleteBtn.textContent = 'Remove from Library';
     deleteBtn.addEventListener('click', function() {
-        myLibrary = myLibrary.filter(b => b !== book);
+        myLibrary.splice(myLibrary.indexOf(book), 1);
         libraryDisplay.removeChild(deleteBtn.parentElement);
-    })
+    });
     return deleteBtn;
+}
+
+function NewReadToggle(book) {
+    const readToggle = document.createElement('button');
+    readToggle.classList.add('readToggle');
+    readToggle.textContent = book.read ? 'Change to unread' : 'Change to read';
+    readToggle.addEventListener('click', function() {
+        const newBook = new Book(book.title, book.author, book.pages, book.read ? false : true);
+        myLibrary.splice(myLibrary.indexOf(book), 1, newBook);
+        libraryDisplay.removeChild(readToggle.parentElement);
+        displayBooks();
+    })
+    return readToggle;
 }
 
 function submitForm(e) {
