@@ -29,22 +29,22 @@ function addBookToLibrary() {
 function displayBooks() {
     myLibrary.forEach((book) => {
         if (!book.isOnDisplay) {
-            libraryDisplay.appendChild(NewCard(book));
+            libraryDisplay.appendChild(createCard(book));
             book.isOnDisplay = true;
         }
     })
 }
 
-function NewCard(book) {
+function createCard(book) {
     const card = document.createElement('div');
     card.classList.add('card');
     card.textContent = `${book.title} by ${book.author}, ${book.pages} pages. ${book.read ? 'Read' : 'Unread'}.`;
-    card.appendChild(NewDeleteBtn(book));
-    card.appendChild(NewReadToggle(book));
+    card.appendChild(createDltBtn(book));
+    card.appendChild(createReadTgl(book));
     return card;
 }
 
-function NewDeleteBtn(book) {
+function createDltBtn(book) {
     const deleteBtn = document.createElement('button');
     deleteBtn.classList.add('deleteBtn');
     deleteBtn.textContent = 'Remove from Library';
@@ -55,7 +55,7 @@ function NewDeleteBtn(book) {
     return deleteBtn;
 }
 
-function NewReadToggle(book) {
+function createReadTgl(book) {
     const readToggle = document.createElement('button');
     readToggle.classList.add('readToggle');
     readToggle.textContent = book.read ? 'Change to unread' : 'Change to read';
