@@ -26,35 +26,32 @@ function addBookToLibrary() {
     displayBooks();
 }
 
-
 function displayBooks() {
     myLibrary.forEach((book) => {
         if (!book.isOnDisplay) {
-            const card = document.createElement('div');
-            card.classList.add('card');
-            card.classList.add(`${myLibrary.indexOf(book)}`);
-            card.textContent = `${book.title} by ${book.author}, ${book.pages} pages. ${book.read ? 'Read' : 'Unread'}.`;
-
-            const deleteBtn = document.createElement('button');
-            deleteBtn.classList.add('deleteBtn');
-            deleteBtn.textContent = 'Remove from Library';
-            deleteBtn.addEventListener('click', removeBookFromLibrary);
-
-            card.appendChild(deleteBtn);
-            libraryDisplay.appendChild(card);
+            libraryDisplay.appendChild(NewCard(book));
             book.isOnDisplay = true;
-            
-            function removeBookFromLibrary() {
-                for (let i = 0; i < myLibrary.length; i++) {
-                    if (`${i}` in deleteBtn.parentElement.classList) {
-                        myLibrary.splice(i, 1);
-                        libraryDisplay.removeChild(deleteBtn.parentElement);
-                    }
-                }
-                
-            }
         }
     })
+}
+
+function NewCard(book) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.textContent = `${book.title} by ${book.author}, ${book.pages} pages. ${book.read ? 'Read' : 'Unread'}.`;
+    card.appendChild(NewDeleteBtn(book));
+    return card;
+}
+
+function NewDeleteBtn(book) {
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('deleteBtn');
+    deleteBtn.textContent = 'Remove from Library';
+    deleteBtn.addEventListener('click', function() {
+        myLibrary = myLibrary.filter(b => b !== book);
+        libraryDisplay.removeChild(deleteBtn.parentElement);
+    })
+    return deleteBtn;
 }
 
 function submitForm(e) {
