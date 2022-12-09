@@ -23,24 +23,16 @@ function addBookToLibrary() {
     const newBook = new Book(document.getElementById("author").value, document.getElementById("title").value,
         document.getElementById("pages").value, document.getElementById("read").checked);
     myLibrary.push(newBook);
-    displayBooks();
-}
-
-function displayBooks() {
-    myLibrary.forEach((book) => {
-        if (!book.isOnDisplay) {
-            libraryDisplay.appendChild(createCard(book));
-            book.isOnDisplay = true;
-        }
-    })
+    libraryDisplay.appendChild(createCard(newBook));
 }
 
 function createCard(book) {
     const card = document.createElement('div');
     card.classList.add('card');
+    card.classList.add(`${myLibrary.indexOf(book)}`);
     card.textContent = `${book.title} by ${book.author}, ${book.pages} pages. ${book.read ? 'Read' : 'Unread'}.`;
     card.appendChild(createDltBtn(book));
-    card.appendChild(createReadTgl(book));
+    card.appendChild(createReadTgl(book, card));
     return card;
 }
 
@@ -55,15 +47,15 @@ function createDltBtn(book) {
     return deleteBtn;
 }
 
-function createReadTgl(book) {
+function createReadTgl(book, card) {
     const readToggle = document.createElement('button');
     readToggle.classList.add('readToggle');
     readToggle.textContent = book.read ? 'Change to unread' : 'Change to read';
     readToggle.addEventListener('click', function() {
-        const newBook = new Book(book.title, book.author, book.pages, book.read ? false : true);
+        const newBook = new Book(book.author, book.title, book.pages, book.read ? false : true);
+        libraryDisplay.insertBefore(createCard(newBook), card);
+        libraryDisplay.removeChild(card);
         myLibrary.splice(myLibrary.indexOf(book), 1, newBook);
-        libraryDisplay.removeChild(readToggle.parentElement);
-        displayBooks();
     })
     return readToggle;
 }
